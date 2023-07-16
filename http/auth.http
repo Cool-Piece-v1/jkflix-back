@@ -1,0 +1,8 @@
+## 로그인
+POST http://localhost:8080/api/v1/user/log-in
+Content-Type: application/json
+
+{
+  "email" : "test1@test1.com",
+  "password" : "1234"
+}
