@@ -27,12 +27,12 @@ public class UserController {
 
     private final AppConfig appConfig;
 
-    @PostMapping("/api/v1/user/sign-up")
+    @PostMapping("/api/v1/auth/sign-up")
     public void signup(@RequestBody Signup signup) {
         userservice.signup(signup);
     }
 
-    @PostMapping("/api/v1/user/log-in")
+    @PostMapping("/api/v1/auth/log-in")
     public SessionResponse login(@RequestBody Login login) {
         // SessionResponse (response) ==> accessToken을 String으로 내려줌
         // Login(request) : Email , password
@@ -52,6 +52,4 @@ public class UserController {
 
         return new SessionResponse(jws); // accessToken 형식의 json 형식으로 잔달
     }
-
-
 }
