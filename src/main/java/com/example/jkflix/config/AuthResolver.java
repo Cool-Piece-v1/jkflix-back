@@ -27,10 +27,10 @@ public class AuthResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        // ** resolveArgument - 매개변수를 해석하고 반환하는 역할 (interceptor)
+            // ** resolveArgument - 매개변수를 해석하고 반환하는 역할 (interceptor)
 
-        // 헤더의 Authrization 부분을 jws로 대입함
-        String jws = webRequest.getHeader("Authorization");
+            // 헤더의 Authrization 부분을 jws로 대입함
+            String jws = webRequest.getHeader("Authorization");
 
         // jws 가 없을 시 오류 발생
         if(jws == null || jws.equals("")) {
