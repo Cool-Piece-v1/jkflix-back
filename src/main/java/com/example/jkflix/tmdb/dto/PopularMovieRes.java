@@ -12,7 +12,6 @@ import java.util.List;
 public class PopularMovieRes {
 
     private int page;
-    // private String category;
     private List<popularResults> results;
 
 
@@ -21,7 +20,7 @@ public class PopularMovieRes {
     @AllArgsConstructor
     public static class popularResults { // list 형식으로 들어있는 것은 내부 클래스로 이용해준다.
         private String backdrop_path;
-        private List<genre_ids> genre_ids;
+        private List<Genre_ids> genre_ids;
         private int id;
         private String title;
         private String release_date;
@@ -32,9 +31,8 @@ public class PopularMovieRes {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class genre_ids { // list 형식으로 들어있는 것은 내부 클래스로 이용해준다.
+    public static class Genre_ids { // list 형식으로 들어있는 것은 내부 클래스로 이용해준다.
         private int id;
-        private String name;
     }
 
 }

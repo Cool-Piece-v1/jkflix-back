@@ -13,5 +13,10 @@ public class Signup {
     private String password;
     private String introduce;
 
+    private int like;
+    private int view;
+
+
+
 
 }

@@ -39,7 +39,7 @@ public class TmdbClient {
 
         // header 세팅
         var headers = new HttpHeaders();
-        headers.set("Authorization", ApiAccessToken);
+        headers.set("Authorization", "Bearer " +  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNjhiYWFmOTIwZjM0MTE5YmY5MTcwZjgyM2UwMmY1NiIsInN1YiI6IjY0YWJiM2YzNmEzNDQ4MDEyY2U1Y2UxNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5ncFIDAh7Cr9kOybYI2eyizPhADxboe23pk6L4ip4MQ");
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         // Entity에 담아줌

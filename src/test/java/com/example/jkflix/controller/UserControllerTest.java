@@ -14,6 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 class UserControllerTest {
@@ -121,5 +126,27 @@ class UserControllerTest {
         // then
         assertThrows(InvalidSigninInformation.class, () -> userservice.signin(login));
     }
+
+    @Test
+    @DisplayName("내 정보 가져오기")
+    void test5() {
+        // given
+//        PostCreate request = PostCreate.builder()
+//                .content("내용입니다.")
+//                .build();
+//
+//        String json = objectMapper.writeValueAsString(request);
+//
+//        // expected
+//        mockMvc.perform(post("/posts")
+//                        .contentType(APPLICATION_JSON)
+//                        .content(json))
+//                .andExpect(status().isBadRequest())
+//                .andExpect(jsonPath("$.code").value("400"))
+//                .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
+//                .andExpect(jsonPath("$.validation.title").value("타이틀을 입력하세요."))
+//                .andDo(print());
+    }
+
 
 }

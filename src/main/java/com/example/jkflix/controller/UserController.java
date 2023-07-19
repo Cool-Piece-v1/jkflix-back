@@ -10,6 +10,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,4 +53,7 @@ public class UserController {
 
         return new SessionResponse(jws); // accessToken 형식의 json 형식으로 잔달
     }
+
+    @GetMapping("api/v11/user/me")
+    public Session
 }
