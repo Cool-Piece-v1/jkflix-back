@@ -4,20 +4,21 @@ import com.example.jkflix.config.AppConfig;
 import com.example.jkflix.request.Login;
 import com.example.jkflix.request.Signup;
 import com.example.jkflix.response.SessionResponse;
+import com.example.jkflix.response.UserResponse;
 import com.example.jkflix.response.UserSession;
 import com.example.jkflix.service.Userservice;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -54,6 +55,9 @@ public class UserController {
         return new SessionResponse(jws); // accessToken 형식의 json 형식으로 잔달
     }
 
-    @GetMapping("api/v11/user/me")
-    public Session
+    @GetMapping("api/v1/user/me/{id}")
+    public ResponseEntity<Map<String, Object>> getMe(@PathVariable Long id) {
+        // 해야할 것, 현재 내 정보를 json으로 반환해줘야함
+        return ResponseEntity.ok().body(userservice.getMyData(id));
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.jkflix.controller;
 
+import com.example.jkflix.response.LikeResponse;
 import com.example.jkflix.tmdb.TmdbClient;
 import com.example.jkflix.tmdb.dto.PopularMovieReq;
 import org.junit.jupiter.api.DisplayName;
@@ -29,5 +30,18 @@ public class TmdbControllerTest {
         System.out.println(result);
     }
 
+
+
+    @Test
+    @DisplayName("라이크에 쓸 영화 리스트업")
+    public void likeMovieDetail() {
+
+        var search = new LikeResponse();
+        search.setLanguage("ko-KR");
+        search.setMovie_id("667538");
+
+        var result = tmdbClient.likeMovieDetails(search);
+        System.out.println(result);
+    }
 
 }
