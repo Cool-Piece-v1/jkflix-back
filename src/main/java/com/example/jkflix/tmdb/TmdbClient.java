@@ -1,6 +1,7 @@
 package com.example.jkflix.tmdb;
 
 import com.example.jkflix.response.LikeResponse;
+import com.example.jkflix.response.MovieDetails;
 import com.example.jkflix.tmdb.dto.PopularMovieReq;
 import com.example.jkflix.tmdb.dto.PopularMovieRes;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,14 +61,17 @@ public class TmdbClient {
 
     }
 
-    public LikeResponse likeMovieDetails(LikeResponse likeResponse) {
+    public MovieDetails likeMovieDetails(MovieDetails movieDetails) {
 
         // uri 세팅
         var uri = UriComponentsBuilder.fromUriString(tmdbDetailMovieUrl)
-                .path(likeResponse.getMovie_id())
+                .path(movieDetails.getContnenId())
+                .queryParam("language",movieDetails.getLanguage())
                 .build()
                 .encode()
                 .toUri();
+
+        System.out.println(uri);
 
         // header 세팅
         var headers = new HttpHeaders();
@@ -76,7 +80,7 @@ public class TmdbClient {
 
         // Entity에 담아줌
         var httpEntity = new HttpEntity<>(headers);
-        var responseType = new ParameterizedTypeReference<LikeResponse>(){};
+        var responseType = new ParameterizedTypeReference<MovieDetails>(){};
 
         var responseEntity = new RestTemplate().exchange(
                 uri,

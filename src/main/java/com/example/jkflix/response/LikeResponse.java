@@ -15,7 +15,7 @@ import java.util.List;
 public class LikeResponse {
 
     private Long id;
-    private String movie_id;
+    private String contentId;
     private String type;
     private String userId;
     private String language;

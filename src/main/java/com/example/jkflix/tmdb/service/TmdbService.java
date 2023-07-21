@@ -1,6 +1,7 @@
 package com.example.jkflix.tmdb.service;
 
 import com.example.jkflix.response.LikeResponse;
+import com.example.jkflix.response.MovieDetails;
 import com.example.jkflix.tmdb.TmdbClient;
 import com.example.jkflix.tmdb.dto.PopularMovieReq;
 import com.example.jkflix.tmdb.dto.PopularMovieRes;
@@ -23,11 +24,11 @@ public class TmdbService {
         return tmdbClient.popularMovie(search);
     }
 
-    public LikeResponse searchContentDetail(String likeContentId) {
+    public MovieDetails searchContentDetail(String likeContentId) {
 
-        var search = new LikeResponse();
+        var search = new MovieDetails();
         search.setLanguage("ko-KR");
-        search.setMovie_id(likeContentId);
+        search.setContnenId(likeContentId);
 
         return tmdbClient.likeMovieDetails(search);
 

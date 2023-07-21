@@ -7,6 +7,7 @@ import com.example.jkflix.mapper.UserMapper;
 import com.example.jkflix.request.Login;
 import com.example.jkflix.request.Signup;
 import com.example.jkflix.response.LikeResponse;
+import com.example.jkflix.response.MovieDetails;
 import com.example.jkflix.response.UserResponse;
 import com.example.jkflix.tmdb.service.TmdbService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,52 +90,21 @@ public class Userservice {
         // 2. Like 갯수 및 정보 전달
         List<LikeResponse> myLikeList = userMapper.getMyLike(id);
         result.put("myLikeListNumber", myLikeList.size());
+        result.put("myLikeListNumber", myLikeList);
+
+        List<MovieDetails> likeMovieDetails = new ArrayList<>();
 
         if (myLikeList.size() > 0) {
             for (int i = 0; i < myLikeList.size(); i++) {
-                var likeContentId = myLikeList.stream().findFirst().get().getMovie_id();
+                var likeContentId = myLikeList.get(i).getContentId();
+                var movieDetails = tmdbService.searchContentDetail(likeContentId);
 
-                var likeContentDetail = tmdbService.searchContentDetail(likeContentId);
-
-                result.put("myLikeList", myLikeList);
+                likeMovieDetails.add(movieDetails);
             }
         }
-        // 3. 좋아요한 영화 정보 전달
-        // 하고 싶은 것 ==> myLikeList의 contentId를 전달받아서 그에 맞는 영화 정보를 가져오는 것
-        // 영화 검색 정보를 받아줘야함
 
-
-        // 영화 고유 번호를 가져온다
-
-
-        // 영화 api 정보에서
-        // 1. 영화 title을 가져옴
-        // 2. 영화 poster 를 가져옴
-
-
-//            var imageQuery = localItem.getTitle().replaceAll("<[^>]*>","");
-//            var searchImageReq = new SearchImageReq();
-//            searchImageReq.setQuery(imageQuery);
-//
-//            // 이미지 검색
-//            var searchImageRes = naverClient.searchImage(searchImageReq);
-//
-//            if(searchImageRes.getTotal() > 0){
-//                var imageItem = searchImageRes.getItems().stream().findFirst().get();
-//
-//                // 결과를 리턴
-//                var result = new WishListDto();
-//                result.setTitle(localItem.getTitle());
-//                result.setCategory(localItem.getCategory());
-//                result.setAddress(localItem.getAddress());
-//                result.setRoadAddress(localItem.getRoadAddress());
-//                result.setHomePageLink(localItem.getLink());
-//                result.setImageLink(imageItem.getLink());
-//                return result;
-
+        result.put("likeMovieDetails", likeMovieDetails);
 
         return result;
     }
 }
-
-
