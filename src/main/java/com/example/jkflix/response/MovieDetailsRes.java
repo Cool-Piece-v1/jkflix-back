@@ -7,14 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieDetails {
+public class MovieDetailsRes {
 
     private Long id;
-    private String contnenId;
     private String poster_path;
     private String title;
     private String overview;
     private String language = "ko-KR";
-
-
+    
 }

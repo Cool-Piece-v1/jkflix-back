@@ -6,9 +6,9 @@ import com.example.jkflix.exception.InvalidSigninInformation;
 import com.example.jkflix.mapper.UserMapper;
 import com.example.jkflix.request.Login;
 import com.example.jkflix.request.Signup;
-import com.example.jkflix.response.LikeResponse;
-import com.example.jkflix.response.MovieDetails;
-import com.example.jkflix.response.UserResponse;
+import com.example.jkflix.response.LikeRes;
+import com.example.jkflix.response.MovieDetailsRes;
+import com.example.jkflix.response.UserRes;
 import com.example.jkflix.tmdb.service.TmdbService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -84,15 +84,15 @@ public class Userservice {
         Map<String, Object> result = new HashMap<>();
 
         // 1. 개인 정보 전달
-        UserResponse myDataList = userMapper.getMyData(id);
+        UserRes myDataList = userMapper.getMyData(id);
         result.put("myDataList", myDataList);
 
         // 2. Like 갯수 및 정보 전달
-        List<LikeResponse> myLikeList = userMapper.getMyLike(id);
+        List<LikeRes> myLikeList = userMapper.getMyLike(id);
         result.put("myLikeListNumber", myLikeList.size());
-        result.put("myLikeListNumber", myLikeList);
+        result.put("myLikeList", myLikeList);
 
-        List<MovieDetails> likeMovieDetails = new ArrayList<>();
+        List<MovieDetailsRes> likeMovieDetails = new ArrayList<>();
 
         if (myLikeList.size() > 0) {
             for (int i = 0; i < myLikeList.size(); i++) {

@@ -3,20 +3,16 @@ package com.example.jkflix.controller;
 import com.example.jkflix.config.AppConfig;
 import com.example.jkflix.request.Login;
 import com.example.jkflix.request.Signup;
-import com.example.jkflix.response.SessionResponse;
-import com.example.jkflix.response.UserResponse;
-import com.example.jkflix.response.UserSession;
+import com.example.jkflix.response.SessionRes;
 import com.example.jkflix.service.Userservice;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.SecretKey;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
 
@@ -35,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/api/v1/auth/log-in")
-    public SessionResponse login(@RequestBody Login login) {
+    public SessionRes login(@RequestBody Login login) {
         // SessionResponse (response) ==> accessToken을 String으로 내려줌
         // Login(request) : Email , password
 
@@ -52,7 +48,7 @@ public class UserController {
                 .setIssuedAt(new Date()) // 토큰 발급 시간 (요청시 마다 바뀜)
                 .compact();
 
-        return new SessionResponse(jws); // accessToken 형식의 json 형식으로 잔달
+        return new SessionRes(jws); // accessToken 형식의 json 형식으로 잔달
     }
 
     @GetMapping("api/v1/user/me/{id}")

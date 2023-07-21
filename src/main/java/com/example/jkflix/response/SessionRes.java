@@ -3,11 +3,11 @@ package com.example.jkflix.response;
 import lombok.Getter;
 
 @Getter
-public class SessionResponse {
+public class SessionRes {
 
     private final String accessToken;
 
-    public SessionResponse(String accessToken) {
+    public SessionRes(String accessToken) {
         this.accessToken = accessToken;
     }
 }

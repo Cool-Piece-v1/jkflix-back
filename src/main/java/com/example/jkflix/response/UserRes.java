@@ -3,7 +3,7 @@ package com.example.jkflix.response;
 import lombok.Data;
 
 @Data
-public class UserResponse {
+public class UserRes {
 
     private Long id;
     private String email;

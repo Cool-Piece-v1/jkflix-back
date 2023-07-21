@@ -1,9 +1,8 @@
 package com.example.jkflix.mapper;
 
 import com.example.jkflix.request.Signup;
-import com.example.jkflix.response.LikeResponse;
-import com.example.jkflix.response.UserResponse;
-import com.example.jkflix.response.UserSession;
+import com.example.jkflix.response.LikeRes;
+import com.example.jkflix.response.UserRes;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -58,12 +57,12 @@ public interface UserMapper {
             FROM User
             where id = #{id}
             """)
-    UserResponse getMyData(Long id);
+    UserRes getMyData(Long id);
 
     @Select("""
             SELECT *
             FROM Likes
             where userid = #{userId}
             """)
-    List<LikeResponse> getMyLike(Long userId);
+    List<LikeRes> getMyLike(Long userId);
 }
