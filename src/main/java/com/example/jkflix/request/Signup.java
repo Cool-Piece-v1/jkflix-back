@@ -11,6 +11,7 @@ public class Signup {
     private String email;
     private String nickName;
     private String password;
+    private String passwordCheck;
     private String introduce;
 
     private int like;

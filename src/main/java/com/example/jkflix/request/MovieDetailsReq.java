@@ -11,4 +11,5 @@ public class MovieDetailsReq {
 
     private String contentId;
 
+
 }

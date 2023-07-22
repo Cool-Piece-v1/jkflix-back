@@ -14,5 +14,5 @@ public class MovieDetailsRes {
     private String title;
     private String overview;
     private String language = "ko-KR";
-    
+
 }

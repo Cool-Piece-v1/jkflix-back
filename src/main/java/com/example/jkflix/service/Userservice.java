@@ -52,6 +52,7 @@ public class Userservice {
         var user = Signup.builder()
                 .email(signup.getEmail())
                 .password(encryptedPassword)
+                .passwordCheck(encryptedPassword)
                 .nickName(signup.getNickName())
                 .introduce(signup.getIntroduce())
                 .build();
@@ -98,7 +99,6 @@ public class Userservice {
             for (int i = 0; i < myLikeList.size(); i++) {
                 var likeContentId = myLikeList.get(i).getContentId();
                 var movieDetails = tmdbService.searchContentDetail(likeContentId);
-
                 likeMovieDetails.add(movieDetails);
             }
         }

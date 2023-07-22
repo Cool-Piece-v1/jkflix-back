@@ -22,14 +22,16 @@ public interface UserMapper {
                 (email,
                 nickName,
                 introduce,
-                password
+                password,
+                passwordCheck
                 )
             VALUES
                 (
                 #{email},
                 #{nickName},
                 #{introduce},
-                #{password}
+                #{password},
+                #{passwordCheck}
                 )
             """)
     void signup(Signup user);
