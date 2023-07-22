@@ -7,17 +7,14 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class GenreSearchReq {
+@NoArgsConstructor
+public class TitleSearchReq {
 
-    private String with_genre;
+    private String query;
+    private String language = "ko-KR";
+    private int page = 1 ;
 
-    private String language = "ko-KR"; // default
-
-    private int page = 1; // default
-
-    private String sort_by = "popularity.desc"; // default
 
 
 
@@ -27,10 +24,8 @@ public class GenreSearchReq {
 
         map.add("language", language);
         map.add("page", String.valueOf(page));
-        map.add("sort_by", sort_by);
-        map.add("with_genres", with_genre);
+        map.add("query", query);
 
         return map;
     }
-
 }

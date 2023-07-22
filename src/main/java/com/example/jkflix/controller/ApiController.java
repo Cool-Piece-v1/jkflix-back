@@ -1,7 +1,9 @@
 package com.example.jkflix.controller;
 
 import com.example.jkflix.request.GenreSearchReq;
+import com.example.jkflix.request.TitleSearchReq;
 import com.example.jkflix.response.GenreSearchRes;
+import com.example.jkflix.response.TitleSearchRes;
 import com.example.jkflix.tmdb.dto.PopularMovieRes;
 import com.example.jkflix.tmdb.service.TmdbService;
 import lombok.Getter;
@@ -25,12 +27,16 @@ public class ApiController {
         return tmdbService.popular(page);
     }
 
-
-    @GetMapping("/genre-serch")
-    public GenreSearchRes genreSearchRes(@RequestParam(defaultValue = "1") int page, GenreSearchReq genreSearchReq) {
-        // 장르를 서치할 건데, 기준은 popular 에 나온 정보들을 기준으로 불러들일거야
-        return tmdbService.genreSearchMoive(page, genreSearchReq);
+    @GetMapping("/genreSearch")
+    public GenreSearchRes genreSearchMovie(GenreSearchReq genreSearchReq) {
+        return tmdbService.genreSearchMovie(genreSearchReq);
     }
+
+    @GetMapping("/titleSearch")
+    public TitleSearchRes genreSearchMovie(TitleSearchReq titleSearchReq) {
+        return tmdbService.titleSearchMovie(titleSearchReq);
+    }
+
 
 
 
