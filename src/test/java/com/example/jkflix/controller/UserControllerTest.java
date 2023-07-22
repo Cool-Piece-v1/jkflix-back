@@ -6,17 +6,34 @@ import com.example.jkflix.mapper.UserMapper;
 import com.example.jkflix.request.Login;
 import com.example.jkflix.request.Signup;
 import com.example.jkflix.service.Userservice;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 class UserControllerTest {
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @Autowired
     private Userservice userservice;
@@ -24,8 +41,8 @@ class UserControllerTest {
     @Autowired
     private UserMapper userMapper;
 
-    @BeforeEach
-    void clean() {userMapper.deleteUserAll(); }
+//    @BeforeEach
+//    void clean() {userMapper.deleteUserAll(); }
 
     @Test
     @DisplayName("회원가입 성공")
@@ -121,5 +138,29 @@ class UserControllerTest {
         // then
         assertThrows(InvalidSigninInformation.class, () -> userservice.signin(login));
     }
+
+    @Test
+    @DisplayName("내 정보 가져오기")
+    void test5() throws Exception {
+        // given
+        Signup request = Signup.builder()
+                .email("test1@test1.com")
+                .id(15L)
+                .build();
+
+        String json = objectMapper.writeValueAsString(request);
+
+        // expected
+        mockMvc.perform(get("/api/v1/user/me/{id}", request.getId())
+                        .contentType(APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isOk())
+//                .andExpect(status().isBadRequest())
+//                .andExpect(jsonPath("$.code").value("400"))
+//                .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
+//                .andExpect(jsonPath("$.validation.title").value("타이틀을 입력하세요."))
+                .andDo(print());
+    }
+
 
 }

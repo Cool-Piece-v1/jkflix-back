@@ -1,7 +1,11 @@
 package com.example.jkflix.mapper;
 
 import com.example.jkflix.request.Signup;
+import com.example.jkflix.response.LikeRes;
+import com.example.jkflix.response.UserRes;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -18,14 +22,16 @@ public interface UserMapper {
                 (email,
                 nickName,
                 introduce,
-                password
+                password,
+                passwordCheck
                 )
             VALUES
                 (
                 #{email},
                 #{nickName},
                 #{introduce},
-                #{password}
+                #{password},
+                #{passwordCheck}
                 )
             """)
     void signup(Signup user);
@@ -47,4 +53,18 @@ public interface UserMapper {
             SELECT * FROM User
             """)
     Signup findUserAll();
+
+    @Select("""
+            SELECT *
+            FROM User
+            where id = #{id}
+            """)
+    UserRes getMyData(Long id);
+
+    @Select("""
+            SELECT *
+            FROM Likes
+            where userid = #{userId}
+            """)
+    List<LikeRes> getMyLike(Long userId);
 }

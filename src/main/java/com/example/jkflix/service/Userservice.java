@@ -6,10 +6,20 @@ import com.example.jkflix.exception.InvalidSigninInformation;
 import com.example.jkflix.mapper.UserMapper;
 import com.example.jkflix.request.Login;
 import com.example.jkflix.request.Signup;
+import com.example.jkflix.response.LikeRes;
+import com.example.jkflix.response.MovieDetailsRes;
+import com.example.jkflix.response.UserRes;
+import com.example.jkflix.tmdb.service.TmdbService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -18,6 +28,9 @@ public class Userservice {
 
     // User관련 정보를 담은 UserMapper 주입
     private final UserMapper userMapper;
+
+    // user 정보 중 like와 view를 가져올 때 사용할 내용 ==> api와 user가 겹치는 부분.
+    private final TmdbService tmdbService;
 
     // 회원가입 메서드 작성
     public void signup(Signup signup) {
@@ -39,31 +52,59 @@ public class Userservice {
         var user = Signup.builder()
                 .email(signup.getEmail())
                 .password(encryptedPassword)
+                .passwordCheck(encryptedPassword)
                 .nickName(signup.getNickName())
                 .introduce(signup.getIntroduce())
                 .build();
 
         userMapper.signup(user);
-        }
+    }
 
     public Long signin(Login login) {
 
         // 로그인한 Email로 로그인된 값이 있는지 확인
         Signup user = userMapper.findByEmail(login.getEmail());
 
-        if(user == null) { // 이메일이 없을 때, 오류메시지 던짐
+        if (user == null) { // 이메일이 없을 때, 오류메시지 던짐
             throw new InvalidSigninInformation();
         }
 
         // 이메일이 존재할 때, 입력한 비밀번호와 암호화된 비밀번호를 비교하는 과정
         PasswordEncoder encoder = new PasswordEncoder();
         var matches = encoder.matches(login.getPassword(), user.getPassword());
-        if(!matches) { // 안맞을 시, 오류 메시지 던짐
+        if (!matches) { // 안맞을 시, 오류 메시지 던짐
             throw new InvalidSigninInformation();
         }
 
         return user.getId();
     }
+
+    public Map<String, Object> getMyData(Long id) {
+
+        // 정보를 넣어줄 Map <- likeMap
+        Map<String, Object> result = new HashMap<>();
+
+        // 1. 개인 정보 전달
+        UserRes myDataList = userMapper.getMyData(id);
+        result.put("myDataList", myDataList);
+
+        // 2. Like 갯수 및 정보 전달
+        List<LikeRes> myLikeList = userMapper.getMyLike(id);
+        result.put("myLikeListNumber", myLikeList.size());
+        result.put("myLikeList", myLikeList);
+
+        List<MovieDetailsRes> likeMovieDetails = new ArrayList<>();
+
+        if (myLikeList.size() > 0) {
+            for (int i = 0; i < myLikeList.size(); i++) {
+                var likeContentId = myLikeList.get(i).getContentId();
+                var movieDetails = tmdbService.searchContentDetail(likeContentId);
+                likeMovieDetails.add(movieDetails);
+            }
+        }
+
+        result.put("likeMovieDetails", likeMovieDetails);
+
+        return result;
+    }
 }
-
-
